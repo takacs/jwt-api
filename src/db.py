@@ -1,7 +1,7 @@
 import sqlite3
 from typing import Generator
 
-DB_PATH = "jotting.db"
+DB_PATH = "jotty.db"
 
 
 def get_db() -> Generator[sqlite3.Connection, None, None]:
