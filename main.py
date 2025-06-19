@@ -6,9 +6,9 @@ app = FastAPI(docs="/")
 app.include_router(router)
 
 
-@app.get("/hello")
-def hello():
-    return {"msg": "hi"}
+@app.get("/health")
+def health():
+    return {"msg": "ok"}
 
 
 if __name__ == "__main__":
