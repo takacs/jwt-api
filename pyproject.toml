@@ -8,5 +8,6 @@ dependencies = [
     "bcrypt>=4.3.0",
     "fastapi>=0.115.13",
     "pydantic[email]>=2.11.7",
+    "ruff>=0.12.0",
     "uvicorn>=0.34.3",
 ]

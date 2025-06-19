@@ -2,8 +2,6 @@ from fastapi import Depends, APIRouter, status, Body
 from fastapi import HTTPException, Security
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlite3 import Connection
-import base64
-import json
 
 from src.db import get_db
 from src.models import (
@@ -100,6 +98,7 @@ def me(credentials: HTTPAuthorizationCredentials = Security(security)):
         return HTTPException(status.HTTP_401_UNAUTHORIZED, "Access token not valid.")
     return payload
 
+
 @router.post("/refresh", response_model=LoginResponse, status_code=status.HTTP_200_OK)
 def refresh(
     refresh_token: str = Body(..., embed=True),
@@ -119,19 +118,17 @@ def refresh(
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Refresh token not found.")
     if db_token[2]:  # revoked
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Refresh token revoked.")
-    if int(db_token[1]) < int(__import__('time').time()):
+    if int(db_token[1]) < int(__import__("time").time()):
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Refresh token expired.")
 
     # Issue new access token
     username = payload.get("sub")
     if not username:
-        raise HTTPException(status.HTTP_400_BAD_REQUEST, "Malformed refresh token payload.")
+        raise HTTPException(
+            status.HTTP_400_BAD_REQUEST, "Malformed refresh token payload."
+        )
     access_token = create_access_token({"sub": username})
 
     return LoginResponse(
-        access_token=access_token,
-        refresh_token=refresh_token,
-        token_type="bearer"
+        access_token=access_token, refresh_token=refresh_token, token_type="bearer"
     )
-
-    
