@@ -1,0 +1,12 @@
+[project]
+name = "jwt"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "bcrypt>=4.3.0",
+    "fastapi>=0.115.13",
+    "pydantic[email]>=2.11.7",
+    "uvicorn>=0.34.3",
+]
